@@ -15,10 +15,11 @@ main {
     align-items: center;
 }
 #search-input {
-    font-size: x-large;
+    font-size: large;
     border: none;
     margin-bottom: 10px;
     border-radius: 3px;
+    padding: 5px 10px;
 }
 h1 {
     font-size: 48px;
@@ -37,7 +38,7 @@ h1 {
     background-color: #c1c1c1;
     border: none;
     color: white;
-    padding: 10px 32px;
+    padding: 5px 32px;
     text-align: center;
     text-decoration: none;
     border-radius: 8px;
@@ -54,6 +55,15 @@ h1 {
     padding: 12px 30px;
     margin-bottom: 15px;
 }
+.close {
+    color: red;
+    font-size: 32px;
+    font-weight: 600;
+    &:hover {
+        scale: 1.2;
+    }
+}
+
 li {
     list-style: none;
 }

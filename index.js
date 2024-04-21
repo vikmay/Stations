@@ -174,7 +174,7 @@ listContainer.addEventListener('click', (event) => {
 });
 
 // Edit station
-listContainer.addEventListener('click', function editStationHandler(event) {
+listContainer.addEventListener('click', (event) => {
     event.preventDefault();
     if (event.target.id === 'edit-station') {
         const stationId = event.target.dataset.id;
@@ -188,7 +188,7 @@ listContainer.addEventListener('click', function editStationHandler(event) {
                 <form id="form-${stationId}" class="edit-station-form">
                     <input type="text" id="address-${stationId}" value="${station.address}">
                     <button id="btn-apply-${stationId}" data-id="${station.id}">Apply</button>
-                    <span onclick="closeEditForm()" style="color: red;font-size: 24px;font-weight: 600;" class="close">&times;</span>
+                    <span onclick="closeEditForm()" class="close">&times;</span>
                 </form>`;
         }
 
@@ -295,4 +295,3 @@ searchInput.addEventListener('input', () => {
 });
 
 getStations();
-
