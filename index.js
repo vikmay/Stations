@@ -42,8 +42,8 @@ btnAllStations.addEventListener('click', () => {
     btnAllStations.classList.add('active-tab');
     btnActiveStations.classList.remove('active-tab');
     btnNotActiveStations.classList.remove('active-tab');
-    currentFilter = 'all'; // Update current filter state
-    getStations(); // Reapply filter
+    currentFilter = 'all';
+    getStations();
 });
 
 // Filter active stations
@@ -51,8 +51,7 @@ btnActiveStations.addEventListener('click', () => {
     btnActiveStations.classList.add('active-tab');
     btnAllStations.classList.remove('active-tab');
     btnNotActiveStations.classList.remove('active-tab');
-    currentFilter = 'active'; // Update current filter state
-
+    currentFilter = 'active';
     const activeStations = stationData.filter(station => station.status);
     renderStations(activeStations);
 });
@@ -62,20 +61,18 @@ btnNotActiveStations.addEventListener('click', () => {
     btnNotActiveStations.classList.add('active-tab');
     btnActiveStations.classList.remove('active-tab');
     btnAllStations.classList.remove('active-tab');
-    currentFilter = 'inactive'; // Update current filter state
-
+    currentFilter = 'inactive';
     const inactiveStations = stationData.filter(station => !station.status);
     renderStations(inactiveStations);
 });
 
-// Close modal button event listener
+// Close modal button
 closeModalBtn.addEventListener('click', () => {
     modal.style.display = 'none';
 });
 
-// New station button event listener
+// New station
 newStationBtn.addEventListener('click', () => {
-    // Get the modal element
     const modal = document.getElementById('modal');
     modal.style.display = 'block';
 });
@@ -107,7 +104,6 @@ newStationForm.addEventListener('submit', (event) => {
             // Close the modal
             const modal = document.getElementById('modal');
             modal.style.display = 'none';
-            // Refresh the stations list
             getStations();
         })
         .catch(error => {
@@ -115,7 +111,7 @@ newStationForm.addEventListener('submit', (event) => {
         });
 });
 
-// Delete station event listener
+// Delete station
 listContainer.addEventListener('click', (event) => {
     if (event.target.id === 'delete-btn') {
         event.preventDefault();
@@ -125,13 +121,10 @@ listContainer.addEventListener('click', (event) => {
             method: 'DELETE'
         })
             .then(() => {
-
                 stationData = stationData.filter(station => station.id !== parseInt(stationId));
-
                 renderStations(stationData);
             })
             .then(() => {
-                // Reapply the current filter
                 if (currentFilter === 'active') {
                     btnActiveStations.click();
                 } else if (currentFilter === 'inactive') {
@@ -146,7 +139,7 @@ listContainer.addEventListener('click', (event) => {
     }
 });
 
-// Change status button event listener
+// Change status
 listContainer.addEventListener('click', (event) => {
     if (event.target.id === 'change-status-btn') {
 
@@ -163,9 +156,7 @@ listContainer.addEventListener('click', (event) => {
             })
         })
             .then(() => {
-                // Update station status in the data array
                 station.status = !station.status;
-                // Render stations based on the current filter
                 if (currentFilter === 'active') {
                     const activeStations = stationData.filter(station => station.status);
                     renderStations(activeStations);
@@ -173,7 +164,6 @@ listContainer.addEventListener('click', (event) => {
                     const inactiveStations = stationData.filter(station => !station.status);
                     renderStations(inactiveStations);
                 } else {
-                    // Default: render all stations
                     renderStations(stationData);
                 }
             })
@@ -183,7 +173,7 @@ listContainer.addEventListener('click', (event) => {
     }
 });
 
-// Edit station event listener
+// Edit station
 listContainer.addEventListener('click', function editStationHandler(event) {
     event.preventDefault();
     if (event.target.id === 'edit-station') {
@@ -191,10 +181,9 @@ listContainer.addEventListener('click', function editStationHandler(event) {
         const station = stationData.find(station => station.id === parseInt(stationId));
         const li = document.getElementById(`station-${stationId}`);
         const existingForm = document.querySelector(`#form-${stationId}`);
-        if (!existingForm) {
-            // Remove other edit forms if present
-            document.querySelectorAll('.edit-station-form').forEach(form => form.remove());
 
+        if (!existingForm) {
+            document.querySelectorAll('.edit-station-form').forEach(form => form.remove());
             li.innerHTML += `
                 <form id="form-${stationId}" class="edit-station-form">
                     <input type="text" id="address-${stationId}" value="${station.address}">
@@ -206,12 +195,10 @@ listContainer.addEventListener('click', function editStationHandler(event) {
         const addressInput = document.getElementById(`address-${stationId}`);
         addressInput.value = station.address;
 
-        // Add event listener to the "Apply" button
+        //New station Apply button
         const applyBtn = document.getElementById(`btn-apply-${stationId}`);
         applyBtn.addEventListener('click', () => {
             const newAddress = addressInput.value;
-
-            // Update station address
             station.address = newAddress;
 
             // Send request to update station data
@@ -228,7 +215,6 @@ listContainer.addEventListener('click', function editStationHandler(event) {
                     renderStations(stationData);
                 })
                 .then(() => {
-                    // Reapply the current filter
                     if (currentFilter === 'active') {
                         btnActiveStations.click();
 
@@ -249,7 +235,7 @@ listContainer.addEventListener('click', function editStationHandler(event) {
     }
 });
 
-// Close edit form on click
+// Close edit modal form on click
 function closeEditForm() {
     const editForm = document.querySelector('.edit-station-form');
     if (editForm) {
@@ -257,27 +243,46 @@ function closeEditForm() {
     }
 }
 
-// Function to filter stations based on search query
+// Function to filter stations based on search query and current filter
 function filterStations(query) {
-    const filteredStations = stationData.filter(station => {
-        // Match the query
-        const addressMatch = station.address.toLowerCase().includes(query.toLowerCase());
-        const idMatch = station.id.toString().includes(query.toLowerCase());
-        const nameMatch = "Station".toLowerCase().includes(query.toLowerCase());
-        const nameIdMatch = `Station ${station.id}`.toLowerCase().includes(query.toLowerCase())
-        return addressMatch || idMatch || nameMatch || nameIdMatch;
-    });
+    let filteredStations;
+    switch (currentFilter) {
+        case 'active':
+            filteredStations = stationData.filter(station => station.status && (
+                station.address.toLowerCase().includes(query.toLowerCase()) ||
+                station.id.toString().includes(query.toLowerCase()) ||
+                "Station".toLowerCase().includes(query.toLowerCase()) ||
+                `Station ${station.id}`.toLowerCase().includes(query.toLowerCase())
+            ));
+            break;
+        case 'inactive':
+            filteredStations = stationData.filter(station => !station.status && (
+                station.address.toLowerCase().includes(query.toLowerCase()) ||
+                station.id.toString().includes(query.toLowerCase()) ||
+                "Station".toLowerCase().includes(query.toLowerCase()) ||
+                `Station ${station.id}`.toLowerCase().includes(query.toLowerCase())
+            ));
+            break;
+        default:
+            filteredStations = stationData.filter(station => (
+                station.address.toLowerCase().includes(query.toLowerCase()) ||
+                station.id.toString().includes(query.toLowerCase()) ||
+                "Station".toLowerCase().includes(query.toLowerCase()) ||
+                `Station ${station.id}`.toLowerCase().includes(query.toLowerCase())
+            ));
+            break;
+    }
     renderStations(filteredStations);
 }
 
-// Event listener for search input field
+// Search
 const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('input', () => {
-    const searchQuery = searchInput.value.trim(); // Trim leading and trailing whitespace
-    if (searchQuery === '') {
-        // If search query is empty, show all stations based on current filter
+    const searchQuery = searchInput.value.trim();
+    if (searchQuery == '') {
         if (currentFilter === 'active') {
             btnActiveStations.click();
+            console.log('active');
         } else if (currentFilter === 'inactive') {
             btnNotActiveStations.click();
 
@@ -285,7 +290,6 @@ searchInput.addEventListener('input', () => {
             btnAllStations.click();
         }
     } else {
-        // If search query is not empty, filter stations based on the query
         filterStations(searchQuery);
     }
 });
