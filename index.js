@@ -120,11 +120,30 @@ listContainer.addEventListener('click', (event) => {
         fetch(`http://localhost:3000/stations/${stationId}`, {
             method: 'DELETE'
         })
-            .then(() => {
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Extract the response text
+                } else {
+                    throw new Error('Error deleting station: ' + response.status);
+                }
+            })
+            .then(message => {
+                // Display the message to the user or update the UI for a certain duration
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.textContent = message;
+                document.body.prepend(messageElement);
+
+                // Remove the message after 3 seconds
+                setTimeout(() => {
+                    document.body.removeChild(messageElement);
+                }, 3000);
+
+                // Assuming stationData is a global variable containing station data
                 stationData = stationData.filter(station => station.id !== parseInt(stationId));
                 renderStations(stationData);
-            })
-            .then(() => {
+
+                // Assuming these are also global variables
                 if (currentFilter === 'active') {
                     btnActiveStations.click();
                 } else if (currentFilter === 'inactive') {
@@ -138,6 +157,8 @@ listContainer.addEventListener('click', (event) => {
             });
     }
 });
+
+
 
 // Change status
 listContainer.addEventListener('click', (event) => {
