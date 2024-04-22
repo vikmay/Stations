@@ -111,7 +111,7 @@ newStationForm.addEventListener('submit', (event) => {
         });
 });
 
-// Delete station
+//Delete station
 listContainer.addEventListener('click', (event) => {
     if (event.target.id === 'delete-btn') {
         event.preventDefault();
@@ -139,11 +139,9 @@ listContainer.addEventListener('click', (event) => {
                     document.body.removeChild(messageElement);
                 }, 3000);
 
-                // Assuming stationData is a global variable containing station data
                 stationData = stationData.filter(station => station.id !== parseInt(stationId));
                 renderStations(stationData);
 
-                // Assuming these are also global variables
                 if (currentFilter === 'active') {
                     btnActiveStations.click();
                 } else if (currentFilter === 'inactive') {
@@ -157,8 +155,6 @@ listContainer.addEventListener('click', (event) => {
             });
     }
 });
-
-
 
 // Change status
 listContainer.addEventListener('click', (event) => {

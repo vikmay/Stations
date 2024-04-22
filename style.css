@@ -26,6 +26,7 @@ h1 {
     font-weight: bolder;
     list-style: none;
     padding: 0;
+    margin: 5px;
 }
 .top-btn-container {
     display: flex;
@@ -176,4 +177,17 @@ li {
             cursor: pointer;
         }
     }
+}
+#station-list {
+    max-height: 50vh;
+    overflow-y: scroll;
+    border: 6px solid rgb(159, 122, 122);
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 5px; /* Roundness of the scrollbar thumb */
+    height: 50px; /* Change the height of the scrollbar thumb */
 }
