@@ -116,10 +116,10 @@ li {
     font-size: 24px;
     font-weight: 600;
     position: absolute;
-    top: 10%;
-    left: 50%;
+    top: 18%;
+    left: 70%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 1000;
     animation: disappear 3s;
 }
 
@@ -179,15 +179,12 @@ li {
     }
 }
 #station-list {
+    min-width: 600px;
+    position: relative;
     max-height: 50vh;
     overflow-y: scroll;
     border: 6px solid rgb(159, 122, 122);
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 10px;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #888; /* Color of the scrollbar thumb */
-    border-radius: 5px; /* Roundness of the scrollbar thumb */
-    height: 50px; /* Change the height of the scrollbar thumb */
 }

@@ -128,7 +128,7 @@ listContainer.addEventListener('click', (event) => {
                 }
             })
             .then(message => {
-                // Display the message to the user or update the UI for a certain duration
+                // Display the messagemm
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.textContent = message;
