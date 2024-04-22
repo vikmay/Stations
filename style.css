@@ -29,6 +29,7 @@ h1 {
     margin: 5px;
 }
 .top-btn-container {
+    position: relative;
     display: flex;
     gap: 20px;
     button {
@@ -116,20 +117,11 @@ li {
     font-size: 24px;
     font-weight: 600;
     position: absolute;
-    top: 18%;
-    left: 70%;
+    top: 40%;
+    right: -65%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-    animation: disappear 3s;
-}
-
-@keyframes disappear {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+    transition: opacity 1s;
 }
 
 .active-tab {
@@ -180,11 +172,11 @@ li {
 }
 #station-list {
     min-width: 600px;
-    position: relative;
     max-height: 50vh;
     overflow-y: scroll;
     border: 6px solid rgb(159, 122, 122);
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 10px;
+    display: none;
 }

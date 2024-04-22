@@ -6,9 +6,18 @@ const btnDelete = document.querySelector('.delete-btn');
 const btnEdit = document.querySelector('.edit-btn');
 const newStationBtn = document.querySelector('#new-station');
 const closeModalBtn = document.querySelector('.close');
+const messageElement = document.querySelector('.message');
 
 let stationData = [];
 let currentFilter = 'all';
+
+function displayStationsContainer() {
+    if (listContainer.innerHTML === '') {
+        listContainer.style.display = 'none';
+    } else {
+        listContainer.style.display = 'block';
+    }
+}
 
 function getStations() {
     fetch('http://localhost:3000/stations')
@@ -35,6 +44,7 @@ function renderStations(data) {
         </div>
      </li><hr>`;
     });
+    displayStationsContainer();
 }
 
 // Tab active all stations
@@ -113,6 +123,7 @@ newStationForm.addEventListener('submit', (event) => {
 
 //Delete station
 listContainer.addEventListener('click', (event) => {
+
     if (event.target.id === 'delete-btn') {
         event.preventDefault();
         const stationId = event.target.dataset.id;
@@ -128,20 +139,18 @@ listContainer.addEventListener('click', (event) => {
                 }
             })
             .then(message => {
-                // Display the messagemm
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message');
                 messageElement.textContent = message;
-                document.body.prepend(messageElement);
 
-                // Remove the message after 3 seconds
                 setTimeout(() => {
-                    document.body.removeChild(messageElement);
+                    messageElement.style.opacity = '0';
+                    setTimeout(() => {
+                        messageElement.textContent = '';
+                    }, 1000)
                 }, 3000);
+                messageElement.style.opacity = '1';
 
                 stationData = stationData.filter(station => station.id !== parseInt(stationId));
                 renderStations(stationData);
-
                 if (currentFilter === 'active') {
                     btnActiveStations.click();
                 } else if (currentFilter === 'inactive') {
@@ -154,6 +163,7 @@ listContainer.addEventListener('click', (event) => {
                 console.error('Error deleting station:', error);
             });
     }
+
 });
 
 // Change status
