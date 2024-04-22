@@ -85,6 +85,8 @@ closeModalBtn.addEventListener('click', () => {
 newStationBtn.addEventListener('click', () => {
     const modal = document.getElementById('modal');
     modal.style.display = 'block';
+    const inputElement = document.getElementById('address');
+    inputElement.focus();
 });
 
 // New Station Form
@@ -119,6 +121,7 @@ newStationForm.addEventListener('submit', (event) => {
         .catch(error => {
             console.error('Error adding new station:', error);
         });
+    ;
 });
 
 //Delete station
