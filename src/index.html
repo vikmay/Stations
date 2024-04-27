@@ -4,8 +4,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Station List</title>
-        <link rel="stylesheet" href="./style.css" />
-        <script defer src="./index.js"></script>
     </head>
     <body>
         <main>
@@ -32,16 +30,12 @@
                             <option value="false">Inactive</option>
                         </select>
                         <button id="btn-apply" type="submit">Apply</button>
-                        <span class="close">&times;</span>
+                        <span id="new-station-input-close">&times;</span>
                     </form>
                 </div>
             </div>
             <div class="top-btn-container">
-                <button
-                    class="active-tab top-buttons"
-                    id="all-stations"
-                    onclick="getStations()"
-                >
+                <button class="active-tab top-buttons" id="all-stations">
                     All<br />Stations
                 </button>
                 <button class="top-buttons" id="btn-active-stations">

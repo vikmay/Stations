@@ -1,33 +1,19 @@
+import './style.css';
+
 const listContainer = document.querySelector('#station-list');
 const btnAllStations = document.querySelector('#all-stations');
 const btnActiveStations = document.querySelector('#btn-active-stations');
 const btnNotActiveStations = document.querySelector('#btn-not-active-stations');
-const btnDelete = document.querySelector('.delete-btn');
-const btnEdit = document.querySelector('.edit-btn');
+// const btnDelete = document.querySelector('.delete-btn');
+// const btnEdit = document.querySelector('.edit-btn');
 const newStationBtn = document.querySelector('#new-station');
-const closeModalBtn = document.querySelector('.close');
+const closeNewStationBtn = document.querySelector('#new-station-input-close');
 const messageElement = document.querySelector('.message');
 
 let stationData = [];
 let currentFilter = 'all';
 
-function displayStationsContainer() {
-    if (listContainer.innerHTML === '') {
-        listContainer.style.display = 'none';
-    } else {
-        listContainer.style.display = 'block';
-    }
-}
-
-function getStations() {
-    fetch('http://localhost:3000/stations')
-        .then((res) => res.json())
-        .then((data) => {
-            stationData = data;
-            renderStations(stationData);
-        });
-}
-
+// Render stations in a list
 function renderStations(data) {
     listContainer.innerHTML = '';
     data.forEach((station) => {
@@ -37,6 +23,7 @@ function renderStations(data) {
           <div id="station-status" class="${station.status === true ? 'station-active' : 'station-inactive'}"></div>
           <b>Station ${station.id}</b> ${station.address}
           <div class="btn-container">
+            <button class="metrics-btn" id="get-metrics" title="Metrics" data-id="${station.id}">&#8451;</button>
             <button class="station-btn" id="edit-station" title="Edit" data-id="${station.id}">Edit</button>
             <button class="station-btn" id="change-status-btn" title="Change Status" data-id="${station.id}">Change Status</button>
             <button class="station-btn" id="delete-btn" title="Remove" data-id="${station.id}">Remove</button>
@@ -46,6 +33,24 @@ function renderStations(data) {
     });
     displayStationsContainer();
 }
+// Do not display stations container's borders if no stations
+function displayStationsContainer() {
+    if (listContainer.innerHTML === '') {
+        listContainer.style.display = 'none';
+    } else {
+        listContainer.style.display = 'block';
+    }
+}
+
+// Get stations from API
+function getStations() {
+    fetch('http://localhost:3000/stations')
+        .then((res) => res.json())
+        .then((data) => {
+            stationData = data;
+            renderStations(stationData);
+        });
+}
 
 // Tab active all stations
 btnAllStations.addEventListener('click', () => {
@@ -53,7 +58,7 @@ btnAllStations.addEventListener('click', () => {
     btnActiveStations.classList.remove('active-tab');
     btnNotActiveStations.classList.remove('active-tab');
     currentFilter = 'all';
-    getStations();
+    renderStations(stationData);
 });
 
 // Filter active stations
@@ -76,22 +81,23 @@ btnNotActiveStations.addEventListener('click', () => {
     renderStations(inactiveStations);
 });
 
-// Close modal button
-closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
 // New station
 newStationBtn.addEventListener('click', () => {
     const modal = document.getElementById('modal');
-    modal.style.display = 'block';
     const inputElement = document.getElementById('address');
+    modal.style.display = 'block';
     inputElement.focus();
+    // Close modal window button
+    closeNewStationBtn.addEventListener('click', (event) => {
+        modal.style.display = 'none';
+        inputElement.value = '';
+    });
 });
 
 // New Station Form
 const newStationForm = document.getElementById('new-station-form');
 newStationForm.addEventListener('submit', (event) => {
+    event.preventDefault();
     const formData = new FormData(newStationForm);
     const address = formData.get('address');
     const status = formData.get('status') === 'true';
@@ -218,7 +224,7 @@ listContainer.addEventListener('click', (event) => {
                 <form id="form-${stationId}" class="edit-station-form">
                     <input type="text" id="address-${stationId}" value="${station.address}">
                     <button id="btn-apply-${stationId}" data-id="${station.id}">Apply</button>
-                    <span onclick="closeEditForm()" class="close">&times;</span>
+                    <span class="close">&times;</span>
                 </form>`;
         }
 
@@ -266,12 +272,11 @@ listContainer.addEventListener('click', (event) => {
 });
 
 // Close edit modal form on click
-function closeEditForm() {
-    const editForm = document.querySelector('.edit-station-form');
-    if (editForm) {
-        editForm.remove();
+addEventListener('click', (event) => {
+    if (event.target.classList.contains('close')) {
+        event.target.parentElement.remove();
     }
-}
+});
 
 // Function to filter stations based on search query and current filter
 function filterStations(query) {

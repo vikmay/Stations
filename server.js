@@ -60,6 +60,9 @@ let stations = [
         status: false
     }
 ];
+let lastTemperatureValue = 36;
+let lastDoseRateValue = 5;
+let lastHumidityValue = 75;
 
 // Routes
 app.get('/stations', (req, res) => {
@@ -94,7 +97,42 @@ app.put('/stations/:id', (req, res) => {
     res.send(stations[index]);
 })
 
+app.get('/stations/:id/metrics', (req, res) => {
+    const station = stations.find(st => st.id == req.params.id);
+    if (!station.status) {
+        res.send({
+            temperature: 0,
+            dose_rate: 0,
+            humidity: 0
+        })
+    } else {
+        lastTemperatureValue = generateRandomNumbers(10, 60, lastTemperatureValue);
+        lastDoseRateValue = generateRandomNumbers(0, 12, lastDoseRateValue);
+        lastHumidityValue = generateRandomNumbers(30, 90, lastHumidityValue);
+
+        res.send({
+            temperature: lastTemperatureValue,
+            dose_rate: lastDoseRateValue,
+            humidity: lastHumidityValue
+        })
+    }
+})
+
+
 // Start the server
 app.listen(port, host, () => {
     console.log(`Server is running on http://${host}:${port}`);
 });
+
+function generateRandomNumbers(min, max, lastValue) {
+    if (lastValue === null) {
+        // Generate a random number across the full range if no last value is provided
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    } else {
+        // Calculate possible lower and upper bounds considering the last known value
+        const low = Math.max(min, lastValue - 1);
+        const high = Math.min(max, lastValue + 1);
+        return Math.floor(Math.random() * (high - low + 1)) + low;
+    }
+}
+
