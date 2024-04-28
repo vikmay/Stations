@@ -60,9 +60,12 @@ h1 {
 .close,
 #new-station-input-close {
     color: red;
+    background: none;
+    border: none;
     font-size: 32px;
     font-weight: 600;
     &:hover {
+        cursor: pointer;
         scale: 1.2;
     }
 }
@@ -176,9 +179,10 @@ li {
 }
 .edit-station-form {
     display: flex;
+    height: 20px;
     align-items: center;
     gap: 5px;
-    margin-bottom: 10px;
+
     span {
         &:hover {
             cursor: pointer;
@@ -194,4 +198,19 @@ li {
     border-radius: 10px;
     margin-bottom: 10px;
     display: none;
+}
+.metrics-info {
+    display: flex;
+    margin: 10px 0;
+    height: 20px;
+    align-items: center;
+    gap: 15px;
+    div {
+        padding: 0 5px;
+        border: 2px solid rgb(165, 143, 143);
+        width: 120px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 }
