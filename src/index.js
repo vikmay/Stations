@@ -1,10 +1,12 @@
 import './style.css';
-import { handleSearchInput } from './search.js';
-import { handleGetMetrics, updateMetrics } from './metrics.js';
-import { filterStations } from './filter.js';
-import { editStation } from './editStation.js';
-import { changeStationStatus } from './changeStatus.js';
-import { openNewStationModal, handleNewStationFormSubmission } from './newStation.js';
+import { handleSearchInput } from './modules/search.js';
+import { handleGetMetrics, updateMetrics } from './modules/metrics.js';
+import { filterStations } from './modules/filter.js';
+import { editStation } from './modules/editStation.js';
+import { changeStationStatus } from './modules/changeStatus.js';
+import { openNewStationModal, handleNewStationFormSubmission } from './modules/newStation.js';
+import { handleEditModalClick } from './utils/closeModal.js';
+import { renderStations } from './utils/renderStations.js';
 
 const listContainer = document.querySelector('#station-list');
 const btnAllStations = document.querySelector('#all-stations');
@@ -17,7 +19,7 @@ const messageElement = document.querySelector('.message');
 let stationData = [];
 let currentFilter = 'all';
 
-// Get stations from API
+// // Get stations from API
 function getStations() {
     fetch('http://localhost:3000/stations')
         .then((res) => res.json())
@@ -28,37 +30,7 @@ function getStations() {
         });
 }
 
-// Render stations in a list
-function renderStations(data) {
-    listContainer.innerHTML = '';
-    data.forEach((station) => {
-        listContainer.innerHTML += `
-     <li id="station-${station.id}" >
-        <div class="station-container" >
-          <div id="station-status" class="${station.status === true ? 'station-active' : 'station-inactive'}"></div>
-          <b>Station ${station.id}</b> ${station.address}
-          <div class="btn-container">
-            <button class="metrics-btn" id="get-metrics" title="Metrics" data-id="${station.id}">Info</button>
-            <button class="station-btn" id="edit-station" title="Edit" data-id="${station.id}">Edit</button>
-            <button class="station-btn" id="change-status-btn" title="Change Status" data-id="${station.id}">Change Status</button>
-            <button class="station-btn" id="delete-btn" title="Remove" data-id="${station.id}">Remove</button>
-          </div>
-        </div>
-     </li><hr>`;
-    });
-    displayStationsContainer();
-}
-
-// Do not display stations container's borders if no stations
-function displayStationsContainer() {
-    if (listContainer.innerHTML === '') {
-        listContainer.style.display = 'none';
-    } else {
-        listContainer.style.display = 'block';
-    }
-}
-
-// Tab active all stations
+// Show all stations
 btnAllStations.addEventListener('click', () => {
     btnAllStations.classList.add('active-tab');
     btnActiveStations.classList.remove('active-tab');
@@ -67,7 +39,7 @@ btnAllStations.addEventListener('click', () => {
     renderStations(stationData);
 });
 
-// Filter active stations
+// Show active stations
 btnActiveStations.addEventListener('click', () => {
     btnActiveStations.classList.add('active-tab');
     btnAllStations.classList.remove('active-tab');
@@ -77,7 +49,7 @@ btnActiveStations.addEventListener('click', () => {
     renderStations(activeStations);
 });
 
-// Filter inactive stations
+// Show inactive stations
 btnNotActiveStations.addEventListener('click', () => {
     btnNotActiveStations.classList.add('active-tab');
     btnActiveStations.classList.remove('active-tab');
@@ -87,9 +59,9 @@ btnNotActiveStations.addEventListener('click', () => {
     renderStations(inactiveStations);
 });
 
-// Attach event listeners
+// Create new station
 newStationBtn.addEventListener('click', () => openNewStationModal(closeNewStationBtn));
-handleNewStationFormSubmission(() => getStations());
+handleNewStationFormSubmission('click', () => renderStations(stationData));
 
 //Delete station
 listContainer.addEventListener('click', (event) => {
@@ -153,5 +125,9 @@ listContainer.addEventListener('click', (event) => {
     }
 });
 
+// Close modal
+addEventListener('click', handleEditModalClick);
+// Get metrics
 handleGetMetrics(currentFilter, updateMetrics);
+// Get stations
 getStations();

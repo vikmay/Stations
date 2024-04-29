@@ -9,7 +9,7 @@ export function editStation(stationId, stationData, currentFilter, btnActiveStat
             <form id="form-${stationId}" class="edit-station-form">
                 <input type="text" id="address-${stationId}" value="${station.address}">
                 <button id="btn-apply-${stationId}" data-id="${station.id}">Apply</button>
-                <button class="close">&times;</button>
+                <button class="edit-close">&times;</button>
             </form>`;
     }
 

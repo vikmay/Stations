@@ -58,6 +58,7 @@ h1 {
     margin-bottom: 15px;
 }
 .close,
+.edit-close,
 #new-station-input-close {
     color: red;
     background: none;

@@ -1,5 +1,3 @@
-
-
 export function handleSearchInput(currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations, filterStations, renderStations, stationData) {
     const searchInput = document.getElementById('search-input');
     searchInput.addEventListener('input', () => {
