@@ -1,3 +1,5 @@
+import { baseUrl } from "../utils/configURL";
+
 export function handleGetMetrics(currentFilter, updateMetrics) {
     document.addEventListener('click', async (e) => {
         let intervalId;
@@ -61,7 +63,7 @@ export function handleGetMetrics(currentFilter, updateMetrics) {
 
 export async function updateMetrics(stationId) {
     try {
-        const response = await fetch(`http://localhost:3000/stations/${stationId}/metrics`);
+        const response = await fetch(`${baseUrl}/stations/${stationId}/metrics`);
         if (!response.ok) {
             throw new Error('Failed to fetch metrics');
         }

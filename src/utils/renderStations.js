@@ -4,6 +4,7 @@ import { displayStationsContainer } from './displayStationContainer.js';
 export function renderStations(data, listContainer) {
   listContainer = document.querySelector('#station-list');
   listContainer.innerHTML = '';
+  console.log('rendered');
   data.forEach((station) => {
     listContainer.innerHTML += `
      <li id="station-${station.id}" >

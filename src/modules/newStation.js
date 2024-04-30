@@ -1,3 +1,6 @@
+import { baseUrl } from "../utils/configURL";
+import { renderStations } from "../utils/renderStations";
+
 export function openNewStationModal(closeNewStationBtn) {
     const modal = document.getElementById('modal');
     const inputElement = document.getElementById('address');
@@ -10,7 +13,7 @@ export function openNewStationModal(closeNewStationBtn) {
     });
 }
 
-export function handleNewStationFormSubmission(getStations) {
+export function handleNewStationFormSubmission(stationData, getStations) {
     const newStationForm = document.getElementById('new-station-form');
     newStationForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -18,13 +21,12 @@ export function handleNewStationFormSubmission(getStations) {
         const address = formData.get('address');
         const status = formData.get('status') === 'true';
 
+        // Add new station to stationData
         const newStationData = {
             address: address,
             status: status
         };
-
-        // Send request to add new station
-        fetch('http://localhost:3000/stations', {
+        fetch(`${baseUrl}/stations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -32,14 +34,15 @@ export function handleNewStationFormSubmission(getStations) {
             body: JSON.stringify(newStationData)
         })
             .then(response => {
+                console.log(newStationData);
                 if (!response.ok) {
                     throw new Error('Failed to add new station');
                 }
                 // Close the modal
                 const modal = document.getElementById('modal');
                 modal.style.display = 'none';
-                getStations();
             })
+            .then(() => getStations(stationData))
             .catch(error => {
                 console.error('Error adding new station:', error);
             });

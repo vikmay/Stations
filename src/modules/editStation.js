@@ -1,4 +1,6 @@
-export function editStation(stationId, stationData, currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations, renderStations) {
+import { baseUrl } from "../utils/configURL";
+
+export function editStation(stationId, stationData, currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations) {
     const station = stationData.find(station => station.id === parseInt(stationId));
     const li = document.getElementById(`station-${stationId}`);
     const existingForm = document.querySelector(`#form-${stationId}`);
@@ -25,7 +27,7 @@ export function editStation(stationId, stationData, currentFilter, btnActiveStat
             station.address = newAddress;
 
             // Send request to update station data
-            fetch(`http://localhost:3000/stations/${stationId}`, {
+            fetch(`${baseUrl}/stations/${stationId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -34,10 +36,8 @@ export function editStation(stationId, stationData, currentFilter, btnActiveStat
                     address: newAddress
                 })
             })
-                .then(() => {
-                    renderStations(stationData);
-                })
-                .then(() => {
+
+                .then((event) => {
                     if (currentFilter === 'active') {
                         btnActiveStations.click();
                     } else if (currentFilter === 'inactive') {
