@@ -1,8 +1,30 @@
-body {
+$main-color: #fdf6f6;
+$secondary-color: rgb(11, 8, 8);
+$main-bg-color: #f2e7e7;
+$active-color: rgb(30, 157, 119);
+$inactive-color: rgb(242, 44, 44);
+$red-btn-color: rgb(123, 8, 8);
+$green-btn-color: rgb(8, 123, 69);
+$blue-btn-color : rgb(8, 81, 123);
+$yellow-btn-color: rgb(255, 245, 54);
+$light-blue-btn-color: rgb(40, 181, 183);
+$main-font-weight: 600;
+
+%flex-col-center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f2e7e7;
+}
+
+%flex-row-center {
+    display: flex;
+    align-items: center;
+}
+
+
+body {
+    @extend %flex-col-center;
+    background-color: $main-bg-color;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -10,10 +32,9 @@ body {
 
 main {
     width: 1000px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @extend %flex-col-center;
 }
+
 #search-input {
     font-size: large;
     border: none;
@@ -21,6 +42,7 @@ main {
     border-radius: 3px;
     padding: 5px 10px;
 }
+
 h1 {
     font-size: 48px;
     font-weight: bolder;
@@ -28,43 +50,50 @@ h1 {
     padding: 0;
     margin: 5px;
 }
+
 .top-btn-container {
-    position: relative;
     display: flex;
+    position: relative;
     gap: 20px;
+
     button {
         width: 150px;
     }
 }
+
 .top-buttons {
+    display: inline-block;
     background-color: #c1c1c1;
     border: none;
-    color: white;
+    color: $main-color;
     padding: 5px 32px;
     text-align: center;
     text-decoration: none;
     border-radius: 8px;
-    display: inline-block;
     font-size: 16px;
     margin: 4px 0;
+
     &:hover {
         cursor: pointer;
         scale: 1.05;
     }
 }
+
 #new-station {
-    background-color: rgb(8, 123, 69);
+    background-color: $green-btn-color;
     padding: 12px 30px;
     margin-bottom: 15px;
 }
+
 .close,
 .edit-close,
 #new-station-input-close {
-    color: red;
+    color: $red-btn-color;
     background: none;
     border: none;
     font-size: 32px;
-    font-weight: 600;
+    font-weight: $main-font-weight;
+
     &:hover {
         cursor: pointer;
         scale: 1.2;
@@ -76,8 +105,7 @@ li {
 }
 
 .station-container {
-    display: flex;
-    align-items: center;
+    @extend %flex-row-center;
     justify-content: flex-start;
     gap: 5px;
     list-style: none;
@@ -92,14 +120,16 @@ li {
         margin-left: auto;
 
         gap: 10px;
+
         .station-btn {
             width: 120px;
             white-space: nowrap;
-            font-weight: 600;
+            font-weight: $main-font-weight;
             border: none;
             border-radius: 5px 18px;
             padding: 5px;
-            color: white;
+            color: $main-color;
+
             &:hover {
                 cursor: pointer;
                 scale: 1.05;
@@ -107,12 +137,13 @@ li {
         }
 
         #get-metrics {
-            background-color: rgb(40, 181, 183);
-            color: blanchedalmond;
-            font-weight: 600;
+            background-color: $light-blue-btn-color;
+            color: $main-color;
+            font-weight: $main-font-weight;
             padding: 5px 10px;
             border: none;
             border-radius: 5px;
+
             &:hover {
                 cursor: pointer;
                 scale: 1.05;
@@ -120,21 +151,24 @@ li {
         }
 
         #edit-station {
-            background-color: rgb(8, 81, 123);
+            background-color: $blue-btn-color;
         }
+
         #change-status-btn {
-            background-color: rgb(255, 245, 54);
-            color: black;
+            background-color: $yellow-btn-color;
+            color: $secondary-color;
         }
+
         #delete-btn {
-            background-color: rgb(123, 8, 8);
+            background-color: $red-btn-color;
         }
     }
 }
+
 .message {
-    color: red;
+    color: $red-btn-color;
     font-size: 24px;
-    font-weight: 600;
+    font-weight: $main-font-weight;
     position: absolute;
     top: 40%;
     right: -65%;
@@ -144,44 +178,26 @@ li {
 }
 
 .active-tab {
-    background-color: rgb(134, 25, 25);
+    background-color: $red-btn-color
 }
+
 .station-active {
-    background-color: rgb(30, 157, 119);
+    background-color: $active-color;
 }
+
 .station-inactive {
-    background-color: rgb(242, 44, 44);
+    background-color: $inactive-color
 }
+
 #station-status {
     border-radius: 50%;
     width: 12px;
     height: 12px;
 }
+
 #new-station-form {
-    display: flex;
-    align-items: center;
+    @extend %flex-row-center;
     margin-bottom: 10px;
-    gap: 5px;
-    span {
-        &:hover {
-            cursor: pointer;
-        }
-    }
-}
-#modal {
-    display: none;
-}
-#btn-apply {
-    cursor: pointer;
-    &:hover {
-        scale: 1.05;
-        background-color: rgb(190, 185, 185);
-    }
-}
-.edit-station-form {
-    display: flex;
-    height: 20px;
-    align-items: center;
     gap: 5px;
 
     span {
@@ -190,6 +206,32 @@ li {
         }
     }
 }
+
+#modal {
+    display: none;
+}
+
+#btn-apply {
+    cursor: pointer;
+
+    &:hover {
+        scale: 1.05;
+        background-color: rgb(190, 185, 185);
+    }
+}
+
+.edit-station-form {
+    @extend %flex-row-center;
+    height: 20px;
+    gap: 5px;
+
+    span {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
 #station-list {
     min-width: 600px;
     max-height: 50vh;
@@ -200,12 +242,13 @@ li {
     margin-bottom: 10px;
     display: none;
 }
+
 .metrics-info {
-    display: flex;
+    @extend %flex-row-center;
     margin: 10px 0;
     height: 20px;
-    align-items: center;
     gap: 15px;
+
     div {
         padding: 0 5px;
         border: 2px solid rgb(165, 143, 143);

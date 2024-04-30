@@ -12,6 +12,7 @@ export function changeStationStatus(stationId, stationData, currentFilter, rende
             status: !station.status
         })
     })
+        //not working current filter logic(always render all stations)
         .then(() => {
             station.status = !station.status;
             if (currentFilter === 'active') {
@@ -31,3 +32,4 @@ export function changeStationStatus(stationId, stationData, currentFilter, rende
             console.error('Error changing status:', error);
         });
 }
+

@@ -1,4 +1,4 @@
-import './style.css';
+import './style.scss';
 import { baseUrl } from './utils/configURL.js';
 import { handleSearchInput } from './modules/search.js';
 import { handleGetMetrics, updateMetrics } from './modules/metrics.js';

@@ -30,7 +30,6 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
 
                 messageElement.style.opacity = '1';
                 stationData = stationData.filter(station => station.id !== parseInt(stationId));
-                console.log('Station deleted,CurrentFilter =', currentFilter);
                 getStations(stationData);
                 if (currentFilter === 'active') {
                     btnActiveStations.click();
