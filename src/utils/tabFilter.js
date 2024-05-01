@@ -35,7 +35,6 @@ export function handleStationFilterClick(filter, btnAllStations, btnActiveStatio
             filteredStations = stationData.filter(station => !station.status);
             break;
     }
-
     // Render filtered stations
     renderStations(filteredStations);
 }

@@ -3,7 +3,6 @@ import { baseUrl } from "../utils/configURL";
 export function handleDeleteButtonClick(event, messageElement, stationData, currentFilter,
     getStations, btnAllStations, btnActiveStations, btnNotActiveStations) {
 
-
     if (event.target.id === 'delete-btn') {
         event.preventDefault();
         const stationId = event.target.dataset.id;
@@ -13,7 +12,7 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
         })
             .then(response => {
                 if (response.ok) {
-                    return response.text(); // Extract the response text
+                    return response.text()
                 } else {
                     throw new Error('Error deleting station: ' + response.status);
                 }

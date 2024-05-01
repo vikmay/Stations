@@ -1,7 +1,5 @@
 export function displayStationsContainer(listContainer) {
-    if (listContainer.innerHTML === '') {
-        listContainer.style.display = 'none';
-    } else {
+    listContainer.innerHTML === '' ?
+        listContainer.style.display = 'none' :
         listContainer.style.display = 'block';
-    }
 }

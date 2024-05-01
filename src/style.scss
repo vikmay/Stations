@@ -3,11 +3,11 @@ $secondary-color: rgb(11, 8, 8);
 $main-bg-color: #f2e7e7;
 $active-color: rgb(30, 157, 119);
 $inactive-color: rgb(242, 44, 44);
-$red-btn-color: rgb(123, 8, 8);
-$green-btn-color: rgb(8, 123, 69);
-$blue-btn-color : rgb(8, 81, 123);
-$yellow-btn-color: rgb(255, 245, 54);
-$light-blue-btn-color: rgb(40, 181, 183);
+$btn-red-color: rgb(123, 8, 8);
+$btn-green-color: rgb(8, 123, 69);
+$btn-blue-color : rgb(8, 81, 123);
+$btn-yellow-color: rgb(190, 181, 0);
+$btn-light-blue-color: rgb(40, 181, 183);
 $main-font-weight: 600;
 
 %flex-col-center {
@@ -80,7 +80,7 @@ h1 {
 }
 
 #new-station {
-    background-color: $green-btn-color;
+    background-color: $btn-green-color;
     padding: 12px 30px;
     margin-bottom: 15px;
 }
@@ -88,7 +88,7 @@ h1 {
 .close,
 .edit-close,
 #new-station-input-close {
-    color: $red-btn-color;
+    color: $btn-red-color;
     background: none;
     border: none;
     font-size: 32px;
@@ -137,7 +137,7 @@ li {
         }
 
         #get-metrics {
-            background-color: $light-blue-btn-color;
+            background-color: $btn-light-blue-color;
             color: $main-color;
             font-weight: $main-font-weight;
             padding: 5px 10px;
@@ -151,22 +151,22 @@ li {
         }
 
         #edit-station {
-            background-color: $blue-btn-color;
+            background-color: $btn-blue-color;
         }
 
         #change-status-btn {
-            background-color: $yellow-btn-color;
-            color: $secondary-color;
+            background-color: $btn-yellow-color;
+            color: $main-color;
         }
 
         #delete-btn {
-            background-color: $red-btn-color;
+            background-color: $btn-red-color;
         }
     }
 }
 
 .message {
-    color: $red-btn-color;
+    color: $inactive-color;
     font-size: 24px;
     font-weight: $main-font-weight;
     position: absolute;
@@ -178,7 +178,7 @@ li {
 }
 
 .active-tab {
-    background-color: $red-btn-color
+    background-color: $btn-red-color
 }
 
 .station-active {

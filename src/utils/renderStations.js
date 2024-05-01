@@ -1,4 +1,3 @@
-// Render stations in a list
 import { displayStationsContainer } from './displayStationContainer.js';
 
 export function renderStations(data, listContainer) {

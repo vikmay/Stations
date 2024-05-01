@@ -1,5 +1,4 @@
 import { baseUrl } from "../utils/configURL";
-import { renderStations } from "../utils/renderStations";
 
 export function openNewStationModal(closeNewStationBtn) {
     const modal = document.getElementById('modal');

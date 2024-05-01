@@ -33,14 +33,13 @@ function getStations() {
                 filterStations, renderStations, stationData);
         });
 }
-
 // Tab filter
-btnAllStations.addEventListener('click', () => handleStationFilterClick('all',
-    btnAllStations, btnActiveStations, btnNotActiveStations, stationData));
-btnActiveStations.addEventListener('click', () => handleStationFilterClick('active',
-    btnAllStations, btnActiveStations, btnNotActiveStations, stationData));
-btnNotActiveStations.addEventListener('click', () => handleStationFilterClick('inactive',
-    btnAllStations, btnActiveStations, btnNotActiveStations, stationData,));
+function addTabClickListener(button, filter) {
+    button.addEventListener('click', () => handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData));
+}
+addTabClickListener(btnAllStations, 'all');
+addTabClickListener(btnActiveStations, 'active');
+addTabClickListener(btnNotActiveStations, 'inactive');
 
 // Create new station
 newStationBtn.addEventListener('click', () => openNewStationModal(closeNewStationBtn));
