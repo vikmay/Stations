@@ -13,9 +13,7 @@ export function changeStationStatus(stationId, stationData, currentFilter, rende
         })
     })
         //render according to current filter
-
         .then(() => {
-
             station.status = !station.status;
             handleStationFilterClick(currentFilter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
         })

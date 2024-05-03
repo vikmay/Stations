@@ -1,7 +1,7 @@
 import { displayStationsContainer } from './displayStationContainer.js';
 
-export function renderStations(data, listContainer) {
-  listContainer = document.querySelector('#station-list');
+export function renderStations(data) {
+  let listContainer = document.querySelector('#station-list');
   listContainer.innerHTML = '';
   data.forEach((station) => {
     listContainer.innerHTML += `

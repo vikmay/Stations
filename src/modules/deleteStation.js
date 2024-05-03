@@ -29,11 +29,12 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
                 }, 3000);
 
                 messageElement.style.opacity = '1';
-
-                // stationData = stationData.filter(station => station.id !== parseInt(stationId));
+                stationData = stationData.filter(station => station.id !== parseInt(stationId));
                 getStations(stationData);
+                //render according to current filter
                 handleStationFilterClick(currentFilter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
             })
+
             .catch((error) => {
                 console.error('Error deleting station:', error);
             });

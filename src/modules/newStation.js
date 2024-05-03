@@ -12,7 +12,7 @@ export function openNewStationModal(closeNewStationBtn) {
     });
 }
 
-export function handleNewStationFormSubmission(stationData, getStations) {
+export function handleNewStationFormSubmission(getStationsCallback) {
     const newStationForm = document.getElementById('new-station-form');
     newStationForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -33,15 +33,18 @@ export function handleNewStationFormSubmission(stationData, getStations) {
             body: JSON.stringify(newStationData)
         })
             .then(response => {
-                console.log(newStationData);
                 if (!response.ok) {
                     throw new Error('Failed to add new station');
                 }
                 // Close the modal
                 const modal = document.getElementById('modal');
                 modal.style.display = 'none';
+                return response.json(); // Return response data
             })
-            .then(() => getStations(stationData))
+            .then(() => {
+                // Call the callback function with the updated stationData
+                return getStationsCallback();
+            })
             .catch(error => {
                 console.error('Error adding new station:', error);
             });

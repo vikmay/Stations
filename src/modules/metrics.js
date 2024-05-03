@@ -74,4 +74,3 @@ export async function updateMetrics(stationId) {
         return 'Error fetching metrics';
     }
 }
-

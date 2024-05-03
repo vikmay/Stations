@@ -8,7 +8,6 @@ export function handleStationFilterClick(filter, btnAllStations, btnActiveStatio
 
     // Handle filtering
     let filteredStations;
-    console.log('before switch');
     switch (filter) {
         case 'all':
             btnAllStations.classList.add('active-tab');

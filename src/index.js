@@ -24,15 +24,25 @@ let currentFilter = 'all';
 
 // Get stations from API
 function getStations() {
-    fetch(`${baseUrl}/stations`)
+    return fetch(`${baseUrl}/stations`)
         .then((res) => res.json())
         .then((data) => {
             stationData = data;
-            renderStations(stationData);
             handleSearchInput(currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations,
                 filterStations, renderStations, stationData);
+            return stationData;
         });
 }
+
+//Render stations on page load
+document.addEventListener('DOMContentLoaded', function () {
+    getStations()
+        .then((stationData) => {
+            renderStations(stationData);
+        })
+        .catch(error => console.error('Error fetching stations:', error));
+});
+
 // Tab filter
 function addTabClickListener(button, filter) {
     button.addEventListener('click', () => {
@@ -46,15 +56,21 @@ addTabClickListener(btnNotActiveStations, 'inactive');
 
 // Create new station
 newStationBtn.addEventListener('click', () => openNewStationModal(closeNewStationBtn));
-handleNewStationFormSubmission(stationData, getStations);
+handleNewStationFormSubmission(() => {
+    getStations()
+        .then((stationData) => {
+            renderStations(stationData);
+        })
+        .catch(error => console.error('Error fetching stations:', error));
+});
 
 // Delete station
 listContainer.addEventListener('click', (event) => {
     if (event.target.id === 'delete-btn') {
         event.preventDefault();
-        const stationId = event.target.dataset.id;
         handleDeleteButtonClick(event, messageElement, stationData,
             currentFilter, getStations, btnAllStations, btnActiveStations, btnNotActiveStations);
+
     }
 });
 
@@ -81,5 +97,3 @@ listContainer.addEventListener('click', (event) => {
 addEventListener('click', handleEditModalClick);
 // Get metrics
 handleGetMetrics(currentFilter, updateMetrics);
-// Get stations
-getStations();
