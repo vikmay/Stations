@@ -6,7 +6,7 @@ $inactive-color: rgb(242, 44, 44);
 $btn-red-color: rgb(123, 8, 8);
 $btn-green-color: rgb(8, 123, 69);
 $btn-blue-color : rgb(8, 81, 123);
-$btn-yellow-color: rgb(190, 181, 0);
+$btn-yellow-color: rgb(231, 200, 26);
 $btn-light-blue-color: rgb(40, 181, 183);
 $main-font-weight: 600;
 
@@ -88,7 +88,7 @@ h1 {
 .close,
 .edit-close,
 #new-station-input-close {
-    color: $btn-red-color;
+    color: $inactive-color;
     background: none;
     border: none;
     font-size: 32px;

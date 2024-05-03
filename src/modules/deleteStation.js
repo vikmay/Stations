@@ -1,4 +1,5 @@
 import { baseUrl } from "../utils/configURL";
+import { handleStationFilterClick } from "../utils/tabFilter";
 
 export function handleDeleteButtonClick(event, messageElement, stationData, currentFilter,
     getStations, btnAllStations, btnActiveStations, btnNotActiveStations) {
@@ -12,7 +13,7 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
         })
             .then(response => {
                 if (response.ok) {
-                    return response.text()
+                    return response.text();
                 } else {
                     throw new Error('Error deleting station: ' + response.status);
                 }
@@ -28,18 +29,10 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
                 }, 3000);
 
                 messageElement.style.opacity = '1';
-                stationData = stationData.filter(station => station.id !== parseInt(stationId));
+
+                // stationData = stationData.filter(station => station.id !== parseInt(stationId));
                 getStations(stationData);
-                if (currentFilter === 'active') {
-                    btnActiveStations.click();
-                    event.preventDefault();
-                } else if (currentFilter === 'inactive') {
-                    btnNotActiveStations.click();
-                    event.preventDefault();
-                } else {
-                    btnAllStations.click();
-                    event.preventDefault();
-                }
+                handleStationFilterClick(currentFilter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
             })
             .catch((error) => {
                 console.error('Error deleting station:', error);

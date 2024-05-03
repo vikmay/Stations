@@ -1,8 +1,8 @@
 import { baseUrl } from "../utils/configURL";
+import { handleStationFilterClick } from "../utils/tabFilter";
 
-export function changeStationStatus(stationId, stationData, currentFilter, renderStations) {
+export function changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations) {
     const station = stationData.find(station => station.id === parseInt(stationId));
-
     fetch(`${baseUrl}/stations/${stationId}`, {
         method: 'PUT',
         headers: {
@@ -12,24 +12,16 @@ export function changeStationStatus(stationId, stationData, currentFilter, rende
             status: !station.status
         })
     })
-        //not working current filter logic(always render all stations)
+        //render according to current filter
+
         .then(() => {
+
             station.status = !station.status;
-            if (currentFilter === 'active') {
-                console.log('active');
-                const activeStations = stationData.filter(station => station.status);
-                renderStations(activeStations);
-            } else if (currentFilter === 'inactive') {
-                console.log('inactive');
-                const inactiveStations = stationData.filter(station => !station.status);
-                renderStations(inactiveStations);
-            } else {
-                console.log('default');
-                renderStations(stationData);
-            }
+            handleStationFilterClick(currentFilter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
         })
         .catch((error) => {
             console.error('Error changing status:', error);
         });
 }
+
 

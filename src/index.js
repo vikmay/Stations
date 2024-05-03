@@ -35,7 +35,10 @@ function getStations() {
 }
 // Tab filter
 function addTabClickListener(button, filter) {
-    button.addEventListener('click', () => handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData));
+    button.addEventListener('click', () => {
+        // handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData,);
+        currentFilter = handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
+    });
 }
 addTabClickListener(btnAllStations, 'all');
 addTabClickListener(btnActiveStations, 'active');
@@ -60,7 +63,8 @@ listContainer.addEventListener('click', (event) => {
     event.preventDefault();
     if (event.target.id === 'change-status-btn') {
         const stationId = event.target.dataset.id;
-        changeStationStatus(stationId, stationData, currentFilter, renderStations);
+        changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations);
+
     }
 });
 
