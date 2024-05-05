@@ -38,11 +38,6 @@ main {
     @extend %flex-col-center;
 }
 
-.top-section {
-    @extend %flex-col-center;
-    // max-height: 30vh;
-}
-
 #counter {
     font-size: 18px;
     font-weight: $main-font-weight;
