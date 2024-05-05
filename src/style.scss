@@ -38,9 +38,22 @@ main {
     @extend %flex-col-center;
 }
 
+.top-section {
+    @extend %flex-col-center;
+    // max-height: 30vh;
+}
+
 #counter {
     font-size: 18px;
     font-weight: $main-font-weight;
+
+    #active-counter {
+        color: $active-color;
+    }
+
+    #inactive-counter {
+        color: $inactive-color;
+    }
 }
 
 #search-input {
@@ -110,6 +123,30 @@ h1 {
 
 li {
     list-style: none;
+}
+
+#station-list {
+    max-height: calc(100vh - 350px);
+    overflow-y: scroll;
+    border: 4px solid $btn-green-color;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: none;
+
+    background-color: $main-bg-color;
+    box-shadow: 20px 20px 60px #bebebe,
+        -20px -20px 30px #ffffff;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+
+        &-thumb {
+            background-color: $btn-light-blue-color;
+            border-radius: 5px;
+        }
+    }
+
 }
 
 .station-container {
@@ -241,30 +278,7 @@ li {
     }
 }
 
-#station-list {
-    // min-width: 30vw;
-    max-height: 50vh;
-    overflow-y: scroll;
-    border: 4px solid $btn-green-color;
-    padding: 30px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    display: none;
 
-    background-color: $main-bg-color;
-    box-shadow: 20px 20px 60px #bebebe,
-        -20px -20px 30px #ffffff;
-
-    &::-webkit-scrollbar {
-        width: 10px;
-
-        &-thumb {
-            background-color: $btn-light-blue-color;
-            border-radius: 5px;
-        }
-    }
-
-}
 
 .metrics-info {
     @extend %flex-row-center;

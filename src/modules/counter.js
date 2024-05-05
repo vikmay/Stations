@@ -16,7 +16,12 @@ export async function updateCounter(getStations) {
         const [active, inactive] = await countStations(getStations);
         const counter = document.querySelector('#counter');
 
-        active === 0 && inactive === 0 ? counter.innerHTML = 'No stations found' : counter.innerHTML = `Active: ${active} | Inactive: ${inactive}`;
+        active === 0 && inactive === 0 ?
+            counter.innerHTML = 'No stations found' :
+            counter.innerHTML = `
+            Active: <span id = 'active-counter'> ${active}</span> |
+            Inactive: <span id = 'inactive-counter'> ${inactive}</span>
+             `;
 
     } catch (error) {
         console.error('Error updating counter:', error);

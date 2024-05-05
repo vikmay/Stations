@@ -35,7 +35,7 @@ function getStations() {
         });
 }
 
-// UpdateCounter when DOM content is loaded
+// UpdateCounter
 document.addEventListener('DOMContentLoaded', updateCounter(getStations));
 
 //Render stations on page load
@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // Tab filter
 function addTabClickListener(button, filter) {
     button.addEventListener('click', () => {
-        // handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData,);
         currentFilter = handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData);
     });
 }
