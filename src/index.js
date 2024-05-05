@@ -10,6 +10,7 @@ import { handleEditModalClick } from './utils/closeModal.js';
 import { renderStations } from './utils/renderStations.js';
 import { handleDeleteButtonClick } from './modules/deleteStation.js';
 import { handleStationFilterClick } from './utils/tabFilter.js';
+import { countStations, updateCounter } from './modules/counter.js';
 
 const listContainer = document.querySelector('#station-list');
 const btnAllStations = document.querySelector('#all-stations');
@@ -33,6 +34,9 @@ function getStations() {
             return stationData;
         });
 }
+
+// UpdateCounter when DOM content is loaded
+document.addEventListener('DOMContentLoaded', updateCounter(getStations));
 
 //Render stations on page load
 document.addEventListener('DOMContentLoaded', function () {
@@ -62,6 +66,9 @@ handleNewStationFormSubmission(() => {
             renderStations(stationData);
         })
         .catch(error => console.error('Error fetching stations:', error));
+
+    countStations(getStations);
+    updateCounter(getStations);
 });
 
 // Delete station
@@ -70,17 +77,19 @@ listContainer.addEventListener('click', (event) => {
         event.preventDefault();
         handleDeleteButtonClick(event, messageElement, stationData,
             currentFilter, getStations, btnAllStations, btnActiveStations, btnNotActiveStations);
-
+        countStations(getStations);
+        updateCounter(getStations);
     }
 });
 
 // Change status
-listContainer.addEventListener('click', (event) => {
+listContainer.addEventListener('click', async (event) => {
     event.preventDefault();
     if (event.target.id === 'change-status-btn') {
-        const stationId = event.target.dataset.id;
-        changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations);
-
+        const stationId = event.target.dataset.id
+        await changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations)
+        countStations(getStations);
+        updateCounter(getStations);
     }
 });
 

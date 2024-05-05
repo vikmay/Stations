@@ -24,15 +24,23 @@ $main-font-weight: 600;
 
 body {
     @extend %flex-col-center;
-    background-color: $main-bg-color;
+    background-image: url('./images/background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    height: 100vh;
 }
 
 main {
     width: 1000px;
     @extend %flex-col-center;
+}
+
+#counter {
+    font-size: 18px;
+    font-weight: $main-font-weight;
 }
 
 #search-input {
@@ -113,6 +121,7 @@ li {
     font-size: 24px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
         sans-serif;
+
 
     .btn-container {
         display: flex;
@@ -233,14 +242,28 @@ li {
 }
 
 #station-list {
-    min-width: 600px;
+    // min-width: 30vw;
     max-height: 50vh;
     overflow-y: scroll;
-    border: 6px solid rgb(159, 122, 122);
+    border: 4px solid $btn-green-color;
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 10px;
     display: none;
+
+    background-color: $main-bg-color;
+    box-shadow: 20px 20px 60px #bebebe,
+        -20px -20px 30px #ffffff;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+
+        &-thumb {
+            background-color: $btn-light-blue-color;
+            border-radius: 5px;
+        }
+    }
+
 }
 
 .metrics-info {
@@ -254,6 +277,7 @@ li {
         border: 2px solid rgb(165, 143, 143);
         width: 120px;
         display: flex;
+        border-radius: 8px;
         align-items: center;
         gap: 5px;
     }
