@@ -20,18 +20,25 @@ let lastTemperatureValue = 36;
 let lastDoseRateValue = 5;
 let lastHumidityValue = 75;
 
-// Routes
-app.get('/stations', (req: Request, res: Response) => {
-    const stations = JSON.parse(
+const readJson = () => {
+    const stations: Station[] = JSON.parse(
         fs.readFileSync('server/stations.json', 'utf-8')
     );
+    return stations;
+};
+
+const writeJson = (data: Station[]) => {
+    fs.writeFileSync('server/stations.json', JSON.stringify(data));
+};
+
+// Routes
+app.get('/stations', (req: Request, res: Response) => {
+    const stations: Station[] = readJson();
     res.send(stations);
 });
 
 app.get('/stations/:id', (req: Request, res: Response) => {
-    const stations = JSON.parse(
-        fs.readFileSync('server/stations.json', 'utf-8')
-    );
+    const stations: Station[] = readJson();
     let station = stations.find(
         (st: Station) => st.id == parseInt(req.params.id)
     );
@@ -39,34 +46,29 @@ app.get('/stations/:id', (req: Request, res: Response) => {
 });
 
 app.post('/stations', (req: Request, res: Response) => {
-    const stations = JSON.parse(
-        fs.readFileSync('server/stations.json', 'utf-8')
-    );
-
-    const station = req.body;
+    const stations: Station[] = readJson();
+    const station: Station = req.body;
     const stationId = stations[stations.length - 1]
         ? stations[stations.length - 1].id + 1
         : 1;
-    const newStation = { ...station, id: stationId };
+    const newStation: Station = { ...station, id: stationId };
     stations.push(newStation);
-    fs.writeFileSync('server/stations.json', JSON.stringify(stations));
+    writeJson(stations);
     res.send(newStation);
 });
 
 app.delete('/stations/:id', (req: Request, res: Response) => {
-    let stations = JSON.parse(fs.readFileSync('server/stations.json', 'utf-8'));
+    let stations: Station[] = readJson();
     stations = stations.filter(
         (st: Station) => st.id != parseInt(req.params.id)
     );
 
-    fs.writeFileSync('server/stations.json', JSON.stringify(stations));
+    writeJson(stations);
     res.send('Station ' + req.params.id + ' is deleted');
 });
 
 app.put('/stations/:id', (req: Request, res: Response) => {
-    const stations = JSON.parse(
-        fs.readFileSync('server/stations.json', 'utf-8')
-    );
+    const stations: Station[] = readJson();
 
     const index = stations.findIndex(
         (st: Station) => st.id == parseInt(req.params.id)
@@ -75,15 +77,13 @@ app.put('/stations/:id', (req: Request, res: Response) => {
         ...stations[index],
         ...req.body,
     };
-    fs.writeFileSync('server/stations.json', JSON.stringify(stations));
+    writeJson(stations);
 
     res.send(stations[index]);
 });
 
 app.get('/stations/:id/metrics', (req: Request, res: Response) => {
-    const stations = JSON.parse(
-        fs.readFileSync('server/stations.json', 'utf-8')
-    );
+    const stations: Station[] = readJson();
 
     const station = stations.find(
         (st: Station) => st.id == parseInt(req.params.id)

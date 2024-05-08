@@ -25,6 +25,7 @@ export function handleGetMetrics(currentFilter, updateMetrics) {
                     const temperatureSpan = document.getElementById(`temperature-${stationId}`);
                     const doseRateSpan = document.getElementById(`dose-rate-${stationId}`);
                     const humiditySpan = document.getElementById(`humidity-${stationId}`);
+                    console.log('updatedMetricsData');
 
                     if (temperatureSpan && doseRateSpan && humiditySpan) {
                         temperatureSpan.textContent = updatedMetricsData.temperature;
