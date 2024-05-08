@@ -4,9 +4,9 @@ import { handleStationFilterClick } from "../utils/tabFilter";
 export function handleDeleteButtonClick(event, messageElement, stationData, currentFilter,
     getStations, btnAllStations, btnActiveStations, btnNotActiveStations) {
 
-    if (event.target.id === 'delete-btn') {
+    const stationId = event.target.dataset.id;
+    if (event.target.id == `delete-btn${stationId}`) {
         event.preventDefault();
-        const stationId = event.target.dataset.id;
 
         fetch(`${baseUrl}/stations/${stationId}`, {
             method: 'DELETE'

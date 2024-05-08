@@ -1,14 +1,12 @@
 import { baseUrl } from "../utils/configURL";
 
+let intervalId;
 export function handleGetMetrics(currentFilter, updateMetrics) {
     document.addEventListener('click', async (e) => {
-        let intervalId;
 
-        // Check if the click target has the id 'get-metrics'
         if (e.target.id === 'get-metrics') {
             const stationId = e.target.dataset.id;
             let metricsInfoSpan = document.getElementById(`metrics-info-${stationId}`);
-
             if (!metricsInfoSpan) {
                 // Metrics info span does not exist, fetch metrics data and append it
                 const metricsData = await updateMetrics(stationId);
@@ -33,11 +31,11 @@ export function handleGetMetrics(currentFilter, updateMetrics) {
                         doseRateSpan.textContent = updatedMetricsData.dose_rate;
                         humiditySpan.textContent = updatedMetricsData.humidity;
                     } else {
-                        clearInterval(intervalId); // Stop interval if elements are not found
+                        clearInterval(intervalId);
                     }
                 }, 2000);
             } else {
-                // Metrics info span already exists, update its content with the latest metrics data fetched from the server.
+                // Metrics info span already exists, update metrics
                 const metricsData = await updateMetrics(stationId);
                 const temperatureSpan = document.getElementById(`temperature-${stationId}`);
                 const doseRateSpan = document.getElementById(`dose-rate-${stationId}`);
@@ -49,16 +47,20 @@ export function handleGetMetrics(currentFilter, updateMetrics) {
             }
         }
 
-        // Close metrics info when close button is clicked
-        if (e.target.classList.contains('close')) {
+        // Close metrics info when close or delete button is clicked
+        if (e.target.classList.contains('close') || e.target.classList.contains('delete-btn')) {
             const stationId = e.target.dataset.id;
-            const metricsInfoSpan = document.getElementById(`metrics-info-${stationId}`);
-            if (metricsInfoSpan) {
-                metricsInfoSpan.remove();
-                clearInterval(intervalId);
-            }
+            removeMetricsInfo(stationId);
         }
     });
+}
+
+function removeMetricsInfo(stationId) {
+    const metricsInfoSpan = document.getElementById(`metrics-info-${stationId}`);
+    if (metricsInfoSpan) {
+        metricsInfoSpan.remove();
+        clearInterval(intervalId);
+    }
 }
 
 export async function updateMetrics(stationId) {

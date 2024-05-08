@@ -39,7 +39,7 @@ function getStations() {
 document.addEventListener('DOMContentLoaded', updateCounter(getStations));
 
 //Render stations on page load
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     getStations()
         .then((stationData) => {
             renderStations(stationData);
@@ -72,7 +72,7 @@ handleNewStationFormSubmission(() => {
 
 // Delete station
 listContainer.addEventListener('click', (event) => {
-    if (event.target.id === 'delete-btn') {
+    if (event.target.classList.contains('delete-btn')) {
         event.preventDefault();
         handleDeleteButtonClick(event, messageElement, stationData,
             currentFilter, getStations, btnAllStations, btnActiveStations, btnNotActiveStations);

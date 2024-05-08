@@ -21,7 +21,6 @@ $main-font-weight: 600;
     align-items: center;
 }
 
-
 body {
     @extend %flex-col-center;
     background-image: url('./images/background.png');
@@ -203,7 +202,7 @@ h1 {
             color: $main-color;
         }
 
-        #delete-btn {
+        .delete-btn {
             background-color: $btn-red-color;
         }
     }
