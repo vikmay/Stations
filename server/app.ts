@@ -16,23 +16,33 @@ interface Station {
     status: boolean;
 }
 
-let stations: Station[] = [];
 let lastTemperatureValue = 36;
 let lastDoseRateValue = 5;
 let lastHumidityValue = 75;
 
 // Routes
 app.get('/stations', (req: Request, res: Response) => {
-    stations = JSON.parse(fs.readFileSync('server/stations.json', 'utf-8'));
+    const stations = JSON.parse(
+        fs.readFileSync('server/stations.json', 'utf-8')
+    );
     res.send(stations);
 });
 
 app.get('/stations/:id', (req: Request, res: Response) => {
-    const station = stations.find((st) => st.id == parseInt(req.params.id));
+    const stations = JSON.parse(
+        fs.readFileSync('server/stations.json', 'utf-8')
+    );
+    let station = stations.find(
+        (st: Station) => st.id == parseInt(req.params.id)
+    );
     res.send(station);
 });
 
 app.post('/stations', (req: Request, res: Response) => {
+    const stations = JSON.parse(
+        fs.readFileSync('server/stations.json', 'utf-8')
+    );
+
     const station = req.body;
     const stationId = stations[stations.length - 1]
         ? stations[stations.length - 1].id + 1
@@ -44,14 +54,23 @@ app.post('/stations', (req: Request, res: Response) => {
 });
 
 app.delete('/stations/:id', (req: Request, res: Response) => {
-    stations = stations.filter((st) => st.id != parseInt(req.params.id));
+    let stations = JSON.parse(fs.readFileSync('server/stations.json', 'utf-8'));
+    stations = stations.filter(
+        (st: Station) => st.id != parseInt(req.params.id)
+    );
 
     fs.writeFileSync('server/stations.json', JSON.stringify(stations));
     res.send('Station ' + req.params.id + ' is deleted');
 });
 
 app.put('/stations/:id', (req: Request, res: Response) => {
-    const index = stations.findIndex((st) => st.id == parseInt(req.params.id));
+    const stations = JSON.parse(
+        fs.readFileSync('server/stations.json', 'utf-8')
+    );
+
+    const index = stations.findIndex(
+        (st: Station) => st.id == parseInt(req.params.id)
+    );
     stations[index] = {
         ...stations[index],
         ...req.body,
@@ -62,7 +81,13 @@ app.put('/stations/:id', (req: Request, res: Response) => {
 });
 
 app.get('/stations/:id/metrics', (req: Request, res: Response) => {
-    const station = stations.find((st) => st.id == parseInt(req.params.id));
+    const stations = JSON.parse(
+        fs.readFileSync('server/stations.json', 'utf-8')
+    );
+
+    const station = stations.find(
+        (st: Station) => st.id == parseInt(req.params.id)
+    );
     if (!station?.status) {
         res.send({
             temperature: 0,
