@@ -39,7 +39,6 @@ async function getStations() {
     }
 }
 
-
 // UpdateCounter
 document.addEventListener('DOMContentLoaded', updateCounter(getStations));
 
@@ -89,11 +88,9 @@ listContainer.addEventListener('click', (event) => {
 // Change status
 listContainer.addEventListener('click', async (event) => {
     event.preventDefault();
-    if (event.target.id === 'change-status-btn') {
-        const stationId = event.target.dataset.id
-        // console.log(stationId);
-        // console.log(stationData[stationData.length - 1].status);
-        changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations)
+    if (event.target.classList.contains('change-status')) {
+        const stationId = event.target.dataset.id;
+        await changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations);
         countStations(getStations);
         updateCounter(getStations);
     }

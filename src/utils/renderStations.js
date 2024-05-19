@@ -12,7 +12,7 @@ export function renderStations(data) {
           <div class="btn-container">
             <button class="metrics-btn" id="get-metrics" title="Metrics" data-id="${station.id}">Info</button>
             <button class="station-btn" id="edit-station" title="Edit" data-id="${station.id}">Edit</button>
-            <button class="station-btn" id="change-status-btn" title="Change Status" data-id="${station.id}">Change Status</button>
+            <button class="station-btn change-status" id="change-status-btn" title="Change Status" data-id="${station.id}">Change Status</button>
             <button class="station-btn delete-btn" id="delete-btn${station.id}" title="Remove" data-id="${station.id}">Remove</button>
           </div>
         </div>

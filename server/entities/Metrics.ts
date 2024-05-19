@@ -6,7 +6,7 @@ import {
     JoinColumn,
     CreateDateColumn,
 } from 'typeorm';
-import { Station } from './Station';
+import { Stations } from './Station';
 
 @Entity('metrics')
 export class Metrics {
@@ -25,9 +25,9 @@ export class Metrics {
     @CreateDateColumn({ type: 'timestamp without time zone' })
     timestamp: Date;
 
-    @ManyToOne(() => Station, (station) => station.metrics)
+    @ManyToOne(() => Stations, (stations) => stations.metrics)
     @JoinColumn({ name: 'station_id' })
-    station: Station;
+    station: Stations;
 
     @Column()
     station_id: number;

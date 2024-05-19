@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { Station } from '../entities/Station';
+import { Stations } from '../entities/Station';
 import { Metrics } from '../entities/Metrics';
 
 export const PostgresDataSource = new DataSource({
@@ -11,5 +11,5 @@ export const PostgresDataSource = new DataSource({
     database: 'radalarm',
     synchronize: true,
     logging: false,
-    entities: [Station, Metrics],
+    entities: [Stations, Metrics],
 });

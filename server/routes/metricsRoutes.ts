@@ -3,10 +3,9 @@ import { generateMetrics } from '../services/metricsGenerator';
 
 const metricsRouter = Router();
 
-// Route to generate and save metrics
-metricsRouter.post('/', async (req: Request, res: Response) => {
+metricsRouter.post('/', (req: Request, res: Response) => {
     try {
-        const result = await generateMetrics();
+        const result = generateMetrics();
         res.status(201).send(result);
     } catch (error) {
         console.error('Error generating metrics:', error);

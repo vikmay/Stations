@@ -58,12 +58,12 @@
 
 import { Router, Request, Response } from 'express';
 import { PostgresDataSource } from '../utils/database';
-import { Station } from '../entities/Station';
+import { Stations } from '../entities/Station';
 import { Metrics } from '../entities/Metrics';
 import { generateMetrics } from '../services/metricsGenerator';
 
 const stationRouter = Router();
-const stationRepository = PostgresDataSource.getRepository(Station);
+const stationRepository = PostgresDataSource.getRepository(Stations);
 const metricsRepository = PostgresDataSource.getRepository(Metrics);
 
 stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
@@ -74,7 +74,6 @@ stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
     if (station && station.status) {
         const generatedMetrics = generateMetrics();
 
-        // Create and save the metrics entity
         const metricsEntity = metricsRepository.create({
             ...generatedMetrics,
             station_id: station.id,
@@ -88,7 +87,11 @@ stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
 });
 
 stationRouter.get('/', async (req: Request, res: Response) => {
-    const stations = await stationRepository.find();
+    const stations = await stationRepository.find({
+        order: {
+            id: 'ASC',
+        },
+    });
     res.send(stations);
 });
 
