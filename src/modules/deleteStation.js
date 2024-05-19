@@ -19,7 +19,7 @@ export function handleDeleteButtonClick(event, messageElement, stationData, curr
                 }
             })
             .then(message => {
-                messageElement.textContent = message;
+                messageElement.textContent = `Station ${stationId} deleted successfully!`;
 
                 setTimeout(() => {
                     messageElement.style.opacity = '0';

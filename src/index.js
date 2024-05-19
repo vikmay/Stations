@@ -24,16 +24,21 @@ let stationData = [];
 let currentFilter = 'all';
 
 // Get stations from API
-function getStations() {
-    return fetch(`${baseUrl}/stations`)
-        .then((res) => res.json())
-        .then((data) => {
-            stationData = data;
-            handleSearchInput(currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations,
-                filterStations, renderStations, stationData);
-            return stationData;
-        });
+async function getStations() {
+    console.log('get stations function called');
+    try {
+        const res = await fetch(`${baseUrl}/stations`);
+        const data = await res.json();
+        stationData = data;
+        handleSearchInput(currentFilter, btnActiveStations, btnNotActiveStations, btnAllStations,
+            filterStations, renderStations, stationData);
+        return stationData;
+    } catch (error) {
+        console.error('Error fetching stations:', error);
+        return 'Error fetching stations';
+    }
 }
+
 
 // UpdateCounter
 document.addEventListener('DOMContentLoaded', updateCounter(getStations));
@@ -86,7 +91,9 @@ listContainer.addEventListener('click', async (event) => {
     event.preventDefault();
     if (event.target.id === 'change-status-btn') {
         const stationId = event.target.dataset.id
-        await changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations)
+        // console.log(stationId);
+        // console.log(stationData[stationData.length - 1].status);
+        changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations)
         countStations(getStations);
         updateCounter(getStations);
     }
