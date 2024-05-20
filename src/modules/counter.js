@@ -1,4 +1,3 @@
-// counter.js
 export async function countStations(getStations) {
     try {
         const stations = await getStations();

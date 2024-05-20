@@ -20,7 +20,6 @@ export function handleNewStationFormSubmission(getStationsCallback) {
         const address = formData.get('address');
         const status = formData.get('status') === 'true';
 
-        // Add new station to stationData
         const newStationData = {
             address: address,
             status: status
@@ -39,10 +38,9 @@ export function handleNewStationFormSubmission(getStationsCallback) {
                 // Close the modal
                 const modal = document.getElementById('modal');
                 modal.style.display = 'none';
-                return response.json(); // Return response data
+                return response.json();
             })
             .then(() => {
-                // Call the callback function with the updated stationData
                 return getStationsCallback();
             })
             .catch(error => {

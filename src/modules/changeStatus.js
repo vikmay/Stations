@@ -10,7 +10,6 @@ export async function changeStationStatus(
     btnNotActiveStations,
     btnAllStations
 ) {
-    console.log('change status function called');
     const station = stationData.find(station => station.id === parseInt(stationId));
     if (!station) {
         console.error(`Station with ID ${stationId} not found`);
@@ -35,7 +34,6 @@ export async function changeStationStatus(
         const updatedStation = await response.json();
         station.status = updatedStation.status;
 
-        // Re-render stations according to the current filter
         handleStationFilterClick(
             currentFilter,
             btnAllStations,

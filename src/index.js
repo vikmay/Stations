@@ -25,7 +25,6 @@ let currentFilter = 'all';
 
 // Get stations from API
 async function getStations() {
-    console.log('get stations function called');
     try {
         const res = await fetch(`${baseUrl}/stations`);
         const data = await res.json();
@@ -35,20 +34,23 @@ async function getStations() {
         return stationData;
     } catch (error) {
         console.error('Error fetching stations:', error);
-        return 'Error fetching stations';
+        return [];
     }
 }
 
-// UpdateCounter
-document.addEventListener('DOMContentLoaded', updateCounter(getStations));
+// UpdateCounter on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', async () => {
+    await updateCounter(getStations);
+});
 
 //Render stations on page load
-document.addEventListener('DOMContentLoaded', () => {
-    getStations()
-        .then((stationData) => {
-            renderStations(stationData);
-        })
-        .catch(error => console.error('Error fetching stations:', error));
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        const stations = await getStations();
+        renderStations(stations);
+    } catch (error) {
+        console.error('Error fetching stations:', error);
+    }
 });
 
 // Tab filter
@@ -63,22 +65,21 @@ addTabClickListener(btnNotActiveStations, 'inactive');
 
 // Create new station
 newStationBtn.addEventListener('click', () => openNewStationModal(closeNewStationBtn));
-handleNewStationFormSubmission(() => {
-    getStations()
-        .then((stationData) => {
-            renderStations(stationData);
-        })
-        .catch(error => console.error('Error fetching stations:', error));
-
-    countStations(getStations);
-    updateCounter(getStations);
+handleNewStationFormSubmission(async () => {
+    try {
+        const stations = await getStations();
+        renderStations(stations);
+        await updateCounter(getStations);
+    } catch (error) {
+        console.error('Error fetching stations:', error);
+    }
 });
 
 // Delete station
-listContainer.addEventListener('click', (event) => {
+listContainer.addEventListener('click', async (event) => {
     if (event.target.classList.contains('delete-btn')) {
         event.preventDefault();
-        handleDeleteButtonClick(event, messageElement, stationData,
+        await handleDeleteButtonClick(event, messageElement, stationData,
             currentFilter, getStations, btnAllStations, btnActiveStations, btnNotActiveStations);
         countStations(getStations);
         updateCounter(getStations);
@@ -91,8 +92,7 @@ listContainer.addEventListener('click', async (event) => {
     if (event.target.classList.contains('change-status')) {
         const stationId = event.target.dataset.id;
         await changeStationStatus(stationId, stationData, currentFilter, renderStations, btnActiveStations, btnNotActiveStations, btnAllStations);
-        countStations(getStations);
-        updateCounter(getStations);
+        await updateCounter(getStations);
     }
 });
 

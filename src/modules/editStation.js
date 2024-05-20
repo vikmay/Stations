@@ -15,18 +15,15 @@ export function editStation(stationId, stationData, currentFilter, btnActiveStat
             </form>`;
     }
 
-    // Ensure addressInput is defined before accessing its properties
     const addressInput = document.getElementById(`address-${stationId}`);
     if (addressInput) {
         addressInput.value = station.address;
 
-        //New station Apply button
         const applyBtn = document.getElementById(`btn-apply-${stationId}`);
         applyBtn.addEventListener('click', () => {
             const newAddress = addressInput.value;
             station.address = newAddress;
 
-            // Send request to update station data
             fetch(`${baseUrl}/stations/${stationId}`, {
                 method: 'PUT',
                 headers: {

@@ -7,8 +7,8 @@ export function handleGetMetrics(currentFilter, updateMetrics) {
         if (e.target.id === 'get-metrics') {
             const stationId = e.target.dataset.id;
             let metricsInfoSpan = document.getElementById(`metrics-info-${stationId}`);
+
             if (!metricsInfoSpan) {
-                // Metrics info span does not exist, fetch metrics data and append it
                 const metricsData = await updateMetrics(stationId);
                 const li = document.getElementById(`station-${stationId}`);
                 li.innerHTML += `
