@@ -13,19 +13,21 @@ export class Metrics {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column('float')
     temperature: number;
 
-    @Column()
+    @Column('float')
     dose_rate: number;
 
-    @Column()
+    @Column('float')
     humidity: number;
 
     @CreateDateColumn({ type: 'timestamp without time zone' })
     timestamp: Date;
 
-    @ManyToOne(() => Stations, (stations) => stations.metrics)
+    @ManyToOne(() => Stations, (stations) => stations.metrics, {
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: 'station_id' })
     station: Stations;
 

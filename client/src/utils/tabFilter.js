@@ -1,4 +1,4 @@
-import { renderStations } from '../utils/renderStations.js';
+import { renderStations } from './renderStations.js';
 
 export function handleStationFilterClick(filter, btnAllStations, btnActiveStations, btnNotActiveStations, stationData) {
     btnAllStations.classList.remove('active-tab');

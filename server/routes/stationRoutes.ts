@@ -2,33 +2,39 @@ import { Router, Request, Response } from 'express';
 import { PostgresDataSource } from '../utils/database';
 import { Stations } from '../entities/Station';
 import { Metrics } from '../entities/Metrics';
-import { generateMetrics } from '../services/metricsGenerator';
 import updateStationIdSequence from '../utils/lastIdChecker';
 
 const stationRouter = Router();
 const stationRepository = PostgresDataSource.getRepository(Stations);
 const metricsRepository = PostgresDataSource.getRepository(Metrics);
 
-stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
-    const station = await stationRepository.findOneBy({
-        id: parseInt(req.params.id),
-    });
+// // Fetch metrics for a specific station
+// stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
+//     const stationId = parseInt(req.params.id);
+//     const station = await stationRepository.findOneBy({ id: stationId });
 
-    if (station && station.status) {
-        const generatedMetrics = generateMetrics();
+//     if (!station) {
+//         return res.status(404).send('Station not found');
+//     }
 
-        const metricsEntity = metricsRepository.create({
-            ...generatedMetrics,
-            station_id: station.id,
-        });
-        const savedMetrics = await metricsRepository.save(metricsEntity);
+//     if (station.status) {
+//         const metrics = await metricsRepository.find({
+//             where: { station: { id: stationId } },
+//             order: { timestamp: 'DESC' },
+//             take: 1,
+//         });
 
-        res.send(savedMetrics);
-    } else {
-        res.send({ temperature: 0, dose_rate: 0, humidity: 0 });
-    }
-});
+//         if (metrics.length > 0) {
+//             return res.send(metrics[0]);
+//         } else {
+//             return res.status(404).send('No metrics found for this station');
+//         }
+//     } else {
+//         return res.send({ temperature: 0, dose_rate: 0, humidity: 0 });
+//     }
+// });
 
+// Fetch all stations
 stationRouter.get('/', async (req: Request, res: Response) => {
     const stations = await stationRepository.find({
         order: {
@@ -38,6 +44,7 @@ stationRouter.get('/', async (req: Request, res: Response) => {
     res.send(stations);
 });
 
+// Fetch a specific station by id
 stationRouter.get('/:id', async (req: Request, res: Response) => {
     const station = await stationRepository.findOneBy({
         id: parseInt(req.params.id),
@@ -45,6 +52,7 @@ stationRouter.get('/:id', async (req: Request, res: Response) => {
     res.send(station);
 });
 
+// Create a new station
 stationRouter.post('/', async (req: Request, res: Response) => {
     try {
         await updateStationIdSequence(PostgresDataSource);
@@ -59,11 +67,13 @@ stationRouter.post('/', async (req: Request, res: Response) => {
     }
 });
 
+// Delete a station by id
 stationRouter.delete('/:id', async (req: Request, res: Response) => {
     const result = await stationRepository.delete(req.params.id);
     res.send(result);
 });
 
+// Update a station by id
 stationRouter.put('/:id', async (req: Request, res: Response) => {
     const station = await stationRepository.findOneBy({
         id: parseInt(req.params.id),
