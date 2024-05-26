@@ -2,10 +2,10 @@
     "name": "station-server",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/app.js",
+    "main": "src/dist/app.js",
     "scripts": {
-        "dev": "nodemon --watch . --ext ts --exec ts-node app.ts",
-        "start": "ts-node app.ts",
+        "dev": "nodemon --watch . --ext ts --exec ts-node src/app.ts",
+        "start": "ts-node src/app.ts",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
@@ -16,8 +16,7 @@
         "express": "^4.19.2",
         "pg": "^8.11.5",
         "reflect-metadata": "^0.2.2",
-        "typeorm": "^0.3.20",
-        "ws": "^8.17.0"
+        "typeorm": "^0.3.20"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",

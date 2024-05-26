@@ -25,12 +25,12 @@ export class Metrics {
     @CreateDateColumn({ type: 'timestamp without time zone' })
     timestamp: Date;
 
+    @Column()
+    station_id: number;
+
     @ManyToOne(() => Stations, (stations) => stations.metrics, {
         onDelete: 'CASCADE',
     })
     @JoinColumn({ name: 'station_id' })
     station: Stations;
-
-    @Column()
-    station_id: number;
 }

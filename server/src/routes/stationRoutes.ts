@@ -1,38 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { PostgresDataSource } from '../utils/database';
 import { Stations } from '../entities/Station';
-import { Metrics } from '../entities/Metrics';
-import updateStationIdSequence from '../utils/lastIdChecker';
 
 const stationRouter = Router();
 const stationRepository = PostgresDataSource.getRepository(Stations);
-const metricsRepository = PostgresDataSource.getRepository(Metrics);
-
-// // Fetch metrics for a specific station
-// stationRouter.get('/:id/metrics', async (req: Request, res: Response) => {
-//     const stationId = parseInt(req.params.id);
-//     const station = await stationRepository.findOneBy({ id: stationId });
-
-//     if (!station) {
-//         return res.status(404).send('Station not found');
-//     }
-
-//     if (station.status) {
-//         const metrics = await metricsRepository.find({
-//             where: { station: { id: stationId } },
-//             order: { timestamp: 'DESC' },
-//             take: 1,
-//         });
-
-//         if (metrics.length > 0) {
-//             return res.send(metrics[0]);
-//         } else {
-//             return res.status(404).send('No metrics found for this station');
-//         }
-//     } else {
-//         return res.send({ temperature: 0, dose_rate: 0, humidity: 0 });
-//     }
-// });
 
 // Fetch all stations
 stationRouter.get('/', async (req: Request, res: Response) => {
@@ -55,8 +26,6 @@ stationRouter.get('/:id', async (req: Request, res: Response) => {
 // Create a new station
 stationRouter.post('/', async (req: Request, res: Response) => {
     try {
-        await updateStationIdSequence(PostgresDataSource);
-
         const station = stationRepository.create(req.body);
         const result = await stationRepository.save(station);
 
