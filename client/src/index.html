@@ -1,52 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Stations</title>
-    </head>
-    <body>
-        <main>
-            <h1>Stations List</h1>
-            <input id="search-input" type="text" placeholder="Search" />
-            <span id="counter"></span>
-            <button class="top-buttons" id="new-station">
-                Add New Station
-            </button>
-
-            <div id="modal" class="modal">
-                <div class="modal-content">
-                    <form id="new-station-form">
-                        <label for="address">Address:</label>
-                        <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            required
-                        />
-                        <label for="status">Status:</label>
-                        <select id="status" name="status">
-                            <option value="true">Active</option>
-                            <option value="false">Inactive</option>
-                        </select>
-                        <button id="btn-apply" type="submit">Apply</button>
-                        <span id="new-station-input-close">&times;</span>
-                    </form>
-                </div>
-            </div>
-            <div class="top-btn-container">
-                <button class="active-tab top-buttons" id="all-stations">
-                    All<br />Stations
-                </button>
-                <button class="top-buttons" id="btn-active-stations">
-                    Active stations
-                </button>
-                <button class="top-buttons" id="btn-not-active-stations">
-                    Inactive Stations
-                </button>
-                <div class="message"></div>
-            </div>
-            <ul id="station-list"></ul>
-        </main>
-    </body>
+<head>
+  <meta charset="utf-8">
+  <title>Client</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
 </html>
