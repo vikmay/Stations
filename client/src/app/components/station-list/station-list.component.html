@@ -1,0 +1,27 @@
+<div>
+    <h1>Station List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sort('id')">ID</th>
+          <th (click)="sort('name')">Name</th>
+          <th (click)="sort('address')">Address</th>
+          <th (click)="sort('status')">Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let station of stations">
+          <td>{{ station.id }}</td>
+          <td (click)="viewStation(station.id)">{{ station.name }}</td>
+          <td>{{ station.address }}</td>
+          <td>{{ station.status }}</td>
+          <td>
+            <button (click)="deleteStation(station.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="navigateToCreate()">Create Station</button>
+  </div>
+  
