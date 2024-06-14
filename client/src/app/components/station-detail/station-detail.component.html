@@ -1,0 +1,10 @@
+<div *ngIf="station">
+    <h1>{{ station.name }}</h1>
+    <p>{{ station.address }}</p>
+    <p>{{ station.status }}</p>
+    <button (click)="navigateToEdit(station.id)">Edit Station</button>
+    <app-station-table
+        *ngIf="station.id !== undefined"
+        [stationId]="station.id"
+    ></app-station-table>
+</div>
