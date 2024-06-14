@@ -1,0 +1,26 @@
+.station_list {
+
+    tr {
+        cursor: pointer;
+        border-bottom: 1px solid lightgray;
+        transition: all 0.1s;
+
+        &:hover {
+            background-color: rgb(199, 194, 194);
+            transform: scale(1.03);
+            transition: all 0.1s;
+
+        }
+
+
+        &:active {
+            background-color: gray;
+        }
+    }
+
+}
+
+table {
+    border-collapse: collapse;
+    // width: 100%;
+}
