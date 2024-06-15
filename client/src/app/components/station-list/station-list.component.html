@@ -1,5 +1,9 @@
-<div>
+<div class="stations-container">
     <h1>Station List</h1>
+    <button
+        class="btn-create"
+        (click)="navigateToCreate()"
+    >Create Station</button>
     <table>
         <thead>
             <tr>
@@ -25,8 +29,5 @@
             </tr>
         </tbody>
     </table>
-    <button
-        class="btn-create"
-        (click)="navigateToCreate()"
-    >Create Station</button>
+
 </div>

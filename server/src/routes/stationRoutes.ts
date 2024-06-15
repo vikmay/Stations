@@ -29,7 +29,6 @@ stationRouter.post('/', async (req: Request, res: Response) => {
         const { id, ...stationData } = req.body; // Ensure id is not included
         const station = stationRepository.create(stationData);
         const result = await stationRepository.save(station);
-
         res.send(result);
     } catch (error) {
         console.error('Error creating station:', error);

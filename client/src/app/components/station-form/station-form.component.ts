@@ -41,6 +41,7 @@ export class StationFormComponent implements OnInit {
     if (this.stationForm.valid) {
       const stationData = this.stationForm.value;
       if (this.isEditMode && this.stationId !== null) {
+        // Include the ID in the update request
         this.stationService
           .updateStation(this.stationId, stationData)
           .subscribe(() => {
