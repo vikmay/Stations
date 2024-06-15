@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StationFormComponent implements OnInit {
   stationForm: FormGroup;
   isEditMode = false;
-  stationId: number | null = null; // Store the station ID
+  stationId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -22,7 +22,7 @@ export class StationFormComponent implements OnInit {
     this.stationForm = this.fb.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
-      status: [false, Validators.required],
+      status: [false, Validators.required], // Default to false
     });
   }
 
@@ -30,7 +30,7 @@ export class StationFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
-      this.stationId = Number(id); // Store the station ID
+      this.stationId = Number(id);
       this.stationService.getStation(this.stationId).subscribe((station) => {
         this.stationForm.patchValue(station);
       });
@@ -40,8 +40,9 @@ export class StationFormComponent implements OnInit {
   onSubmit(): void {
     if (this.stationForm.valid) {
       const stationData = this.stationForm.value;
+      stationData.status = !!stationData.status; // Ensure status is boolean
+
       if (this.isEditMode && this.stationId !== null) {
-        // Include the ID in the update request
         this.stationService
           .updateStation(this.stationId, stationData)
           .subscribe(() => {
