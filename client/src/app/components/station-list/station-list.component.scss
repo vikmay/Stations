@@ -24,3 +24,38 @@ table {
     border-collapse: collapse;
     // width: 100%;
 }
+
+.btn-create {
+    background-color: #757575;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 5px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #2d2d2d;
+        scale: 1.03
+    }
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: rgb(181, 14, 14);
+}

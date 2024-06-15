@@ -23,8 +23,8 @@ export class StationService {
     return this.http.post<Station>(this.apiUrl, station);
   }
 
-  updateStation(station: Station): Observable<Station> {
-    return this.http.put<Station>(`${this.apiUrl}/${station.id}`, station);
+  updateStation(id: number, station: Station): Observable<Station> {
+    return this.http.put<Station>(`${this.apiUrl}/${id}`, station);
   }
 
   deleteStation(id: number): Observable<void> {
