@@ -23,19 +23,6 @@ stationRouter.get('/:id', async (req: Request, res: Response) => {
     res.send(station);
 });
 
-// // Create a new station
-// stationRouter.post('/', async (req: Request, res: Response) => {
-//     try {
-//         const station = stationRepository.create(req.body);
-//         const result = await stationRepository.save(station);
-
-//         res.send(result);
-//     } catch (error) {
-//         console.error('Error creating station:', error);
-//         res.status(500).send('Internal Server Error');
-//     }
-// });
-
 // Create a new station
 stationRouter.post('/', async (req: Request, res: Response) => {
     try {

@@ -1,8 +1,11 @@
-<div *ngIf="station">
-    <h1>{{ station.name }}</h1>
-    <p>{{ station.address }}</p>
-    <p>{{ station.status }}</p>
+<div
+    class="station"
+    *ngIf="station"
+>
     <button (click)="navigateToEdit(station.id)">Edit Station</button>
+    <h1>{{ station.name }}</h1>
+    <Address>Address: <span>{{ station.address }}</span></Address>
+    <p>Status: <span>{{ station.status ? 'Active' : 'Inactive' }}</span></p>
     <app-station-table
         *ngIf="station.id !== undefined"
         [stationId]="station.id"

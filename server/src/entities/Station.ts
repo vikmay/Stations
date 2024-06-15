@@ -7,6 +7,9 @@ export class Stations {
     id: number;
 
     @Column('text')
+    name: string;
+
+    @Column('text')
     address: string;
 
     @Column()
