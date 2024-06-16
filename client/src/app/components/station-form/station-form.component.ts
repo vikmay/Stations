@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StationFormComponent implements OnInit {
   stationForm: FormGroup;
   isEditMode = false;
+  stationId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -21,7 +22,7 @@ export class StationFormComponent implements OnInit {
     this.stationForm = this.fb.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
-      status: ['', Validators.required],
+      status: [false, Validators.required], // Default to false
     });
   }
 
@@ -29,7 +30,8 @@ export class StationFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
-      this.stationService.getStation(Number(id)).subscribe((station) => {
+      this.stationId = Number(id);
+      this.stationService.getStation(this.stationId).subscribe((station) => {
         this.stationForm.patchValue(station);
       });
     }
@@ -37,18 +39,19 @@ export class StationFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.stationForm.valid) {
-      if (this.isEditMode) {
+      const stationData = this.stationForm.value;
+      stationData.status = !!stationData.status; // Ensure status is boolean
+
+      if (this.isEditMode && this.stationId !== null) {
         this.stationService
-          .updateStation(this.stationForm.value)
+          .updateStation(this.stationId, stationData)
           .subscribe(() => {
             this.router.navigate(['/stations']);
           });
       } else {
-        this.stationService
-          .createStation(this.stationForm.value)
-          .subscribe(() => {
-            this.router.navigate(['/stations']);
-          });
+        this.stationService.createStation(stationData).subscribe(() => {
+          this.router.navigate(['/stations']);
+        });
       }
     }
   }

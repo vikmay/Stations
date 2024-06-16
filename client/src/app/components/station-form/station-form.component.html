@@ -1,10 +1,27 @@
-<form [formGroup]="stationForm" (ngSubmit)="onSubmit()">
-    <label for="name">Name</label>
-    <input id="name" formControlName="name" />
-    <label for="address">Address</label>
-    <input id="address" formControlName="address" />
-    <label for="status">Status</label>
-    <input id="status" formControlName="status" />
-    <button type="submit">{{ isEditMode ? 'Update' : 'Create' }}</button>
-  </form>
-  
+<form
+  [formGroup]="stationForm"
+  (ngSubmit)="onSubmit()"
+>
+  <label for="name">Name</label>
+  <input
+    id="name"
+    formControlName="name"
+  />
+
+  <label for="address">Address</label>
+  <input
+    id="address"
+    formControlName="address"
+  />
+
+  <label for="status">Status</label>
+  <select
+    id="status"
+    formControlName="status"
+  >
+    <option [value]="true">Active</option>
+    <option [value]="false">Inactive</option>
+  </select>
+
+  <button type="submit">{{ isEditMode ? 'Update' : 'Create' }}</button>
+</form>

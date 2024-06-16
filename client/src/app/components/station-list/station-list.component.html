@@ -1,5 +1,9 @@
-<div>
+<div class="stations-container">
     <h1>Station List</h1>
+    <button
+        class="btn-create"
+        (click)="navigateToCreate()"
+    >Create Station</button>
     <table>
         <thead>
             <tr>
@@ -18,12 +22,12 @@
                 <td>{{ station.id }}</td>
                 <td (click)="viewStation(station.id)">{{ station.name }}</td>
                 <td>{{ station.address }}</td>
-                <td>{{ station.status }}</td>
+                <td> <span [ngClass]="station.status ? 'circle green' : 'circle red'"></span></td>
                 <td>
                     <button (click)="deleteStation(station.id); $event.stopPropagation()">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
-    <button (click)="navigateToCreate()">Create Station</button>
+
 </div>
